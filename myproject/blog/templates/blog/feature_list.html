@@ -1,0 +1,17 @@
+<!-- blog/tag_list.html -->
+
+{% extends "base.html" %}
+
+{% block title %}特徴一覧 | {{ block.super }}{% endblock %}
+{% block description %}特徴一覧ページです。{% endblock %}
+
+{% block content %}
+<h1>特徴一覧</h1>
+<ul>
+  {% for feature in object_list %}
+  <li><a href="{% url 'blog:feature_post' feature.slug %}">{{ feature.name }} ({{ feature.num_posts }})</a></li>
+  {% empty %}
+  <li>特徴はありません。</li>
+  {% endfor %}
+</ul>
+{% endblock %}

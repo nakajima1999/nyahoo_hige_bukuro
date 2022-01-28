@@ -1,0 +1,47 @@
+<!-- blog/post_detail.html -->
+
+{% extends "base.html" %}
+
+{% block title %}{{ object.title }} | {{ block.super }}{% endblock %}
+{% block description %}{{ object.description }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <main class="col-md-8">
+      <article class="blog-area">
+        <h1>{{ object.title }}</h1>
+        <p>発見日: {{ object.discovery_date }}</p>
+        <p>長さ: {{ object.length  }}cm</p>
+
+        <br>
+        <h3>猫様</h3>
+        {% for cat in object.cats.all %}
+            {{ cat.name }}
+        {% endfor %}
+
+        <h3>特徴</h3>
+        {% for feature in object.features.all %}
+            {{ feature.name }}
+        {% endfor %}
+        <p>{{ object.feature_description }}</p>
+
+        <h3>場所</h3>
+        {% for place in object.places.all %}
+            {{ place.name }}
+        {% endfor %}
+        <p>{{ object.place_description }}</p>
+
+        <hr>
+        {{ object.created_at }}
+        {{ object.updated_at }}
+        {{ object.published_at }}
+      </article>
+
+    </main>
+    <aside class="col-md-4">
+      {% include "blog/snippets/sidebar.html" %}
+    </aside>
+  </div>
+</div>
+{% endblock %}
