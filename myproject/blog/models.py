@@ -1,5 +1,3 @@
-# blog/models.py
-
 from django.db import models
 from django.utils import timezone
 
@@ -30,6 +28,7 @@ class Place(models.Model):
     def __str__(self):
         return self.name
 
+# 投稿
 class Post(models.Model):
     title = models.CharField(max_length=255) ##
     cats = models.ManyToManyField(Cat)

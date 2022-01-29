@@ -1,12 +1,10 @@
-# blog/views.py
-
 from django.db.models import Count, Q
 from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 
-from blog.models import Post, Cat, Feature
+from blog.models import Post, Cat, Feature, Place
 
 
 class PostDetailView(DetailView):
@@ -22,7 +20,7 @@ class PostDetailView(DetailView):
 class IndexView(ListView):
     model = Post
     template_name = 'blog/index.html'
-    paginate_by = 1
+    paginate_by = 6
 
 
 class CatListView(ListView):
@@ -34,6 +32,9 @@ class FeatureListView(ListView):
     queryset = Feature.objects.annotate(num_posts=Count(
         'post', filter=Q(post__is_public=True)))
 
+class PlaceListView(ListView):
+    queryset = Place.objects.annotate(num_posts=Count(
+        'post', filter=Q(post__is_public=True)))
 
 
 class CatPostView(ListView):
@@ -65,4 +66,45 @@ class FeaturePostView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['feature'] = self.feature
+        return context
+
+class PlacePostView(ListView):
+    model = Post
+    template_name = 'blog/place_post.html'
+
+    def get_queryset(self):
+        place_slug = self.kwargs['place_slug']
+        self.place = get_object_or_404(Place, slug=place_slug)
+        qs = super().get_queryset().filter(places=self.place)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['place'] = self.place
+        return context
+
+class SearchPostView(ListView):
+    model = Post
+    template_name = 'blog/search_post.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', None)
+        lookups = (
+            Q(title__icontains=query) |
+            Q(cats__name__icontains=query) |
+            Q(features__name__icontains=query) |
+            Q(places__name__icontains=query)
+        )
+
+        if query is not None:
+            qs = super().get_queryset().filter(lookups).distinct()
+            return qs
+        qs = super().get_queryset()
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        context['query'] = query
         return context
