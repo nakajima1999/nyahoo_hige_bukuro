@@ -67,10 +67,11 @@
   
               <p class="card-text">
                 {{ post.published_at|date }} / {{ post.length }}cm /
+      
                 {% for cat in post.cats.all %}
                   {{ cat.name }}
                 {% endfor %}
-
+                
               </p>
               <a href="{% url 'blog:post_detail' post.id %}" class="btn btn-primary">詳細を見る</a> 
           </div>
