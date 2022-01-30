@@ -12,6 +12,7 @@ class AboutCat(models.Model):
 
 
     name = models.CharField(verbose_name='名前', max_length=255)  # 名前
+    name_en = models.CharField(verbose_name='名前(英語)', max_length=255, default="")  # 名前(英語)
     born = models.CharField(verbose_name='生まれた年', max_length=50)  # 生まれた年月（不明の場合は予想）
     sex = models.IntegerField(verbose_name='性別', choices=GENDER_CHOICES, default=1)  # 性別
     character = models.TextField(verbose_name='性格', max_length=1000)  # 性格

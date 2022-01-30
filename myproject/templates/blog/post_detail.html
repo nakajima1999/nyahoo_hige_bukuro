@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.title }} | {{ block.super }}{% endblock %}
+{% block description %}{{ object.description }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <main class="col-md-8">
+      <article class="blog-area">
+        <h2>{{ object.title }}</h2>
+
+        {% if object.image %}
+            <img src="{{ object.image.url }}" alt="{{ object.title }}" width="50%" height="50%">
+            <hr>
+        {% endif %}
+
+        <h4>猫様</h4>
+        <p>このひげは，以下の猫様のひげと思われる</p>
+        <ul>
+          {% for cat in object.cats.all %}
+          <li>{{ cat.name }}</li>
+          {% endfor %}
+        </ul>
+        
+        <h4>基本情報</h4>
+        <ul>
+          <li>発見日: {{ object.discovery_date }}</li>
+          <li>長さ: {{ object.length  }}cm</li>
+        </ul>
+   
+       <h4>特徴</h4>
+        <ul>
+          {% for feature in object.features.all %}
+            <li>{{ feature.name }}</li>
+          {% endfor %}
+          <li>{{ object.feature_description }}</li>          
+        </ul>
+        
+        <h4>場所</h4>
+        <ul>
+          {% for place in object.places.all %}
+            <li>{{ place.name }}</li>
+          {% endfor %}
+          <li>{{ object.place_description }}</li>
+        </ul>
+
+        <hr>
+
+        <p>
+          <small class="text-muted">作成日:{{ object.created_at }}</small><br>
+          <small class="text-muted">更新日:{{ object.updated_at }}</small><br>
+          <small class="text-muted">公開日:{{ object.published_at }}</small>
+        </p>   
+      </article>
+    </main>
+
+    <aside class="col-md-4">
+      {% include "blog/snippets/sidebar.html" %}
+    </aside>
+
+  </div>
+</div>
+{% endblock %}
