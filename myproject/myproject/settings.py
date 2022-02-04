@@ -67,6 +67,11 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'myproject.context_processors.common',
             ],
+
+        'libraries': {
+                'myfilters': 'templatetags.myfilters' # 追記
+            }
+
         },
     },
 ]
