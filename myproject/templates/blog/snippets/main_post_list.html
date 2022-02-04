@@ -60,13 +60,16 @@
             {% if not post.is_public %}
               <h5><span class="badge badge-secondary">下書き</span></h5>
             {% endif %}
-    
+
+           
+            <div class="post_title">
                 <a href="{% url 'blog:post_detail' post.id %}">       
-                    <h5 class="card-title">{{ post.title }}</h5>
+                    <h5 class="card-title"><div class="max_20ch">{{ post.title }}</div></h5>
                 </a>
-  
+            </div>
+
               <p class="card-text">
-                {{ post.published_at|date }} / {{ post.length }}cm /
+                {{ post.published_at|date:"Y-m-j"  }} / {{ post.length }}cm /
       
                 {% for cat in post.cats.all %}
                   {{ cat.name }}

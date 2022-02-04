@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load myfilters %}
 
 {% block title %}猫様の紹介 | {{ block.super }}{% endblock %}
 {% block description %}猫様の紹介ページです。{% endblock %}
@@ -14,9 +15,23 @@
                 <li><h3>{{ cat }}</h3></li>
                     <ul>
                         <li>生まれ: {{ cat.born }}</li>
-                        <li>性別: {{ cat.get_sex_display }}</li>
-                        <li>性格: {{ cat.character }}</li>
-                        <li>推しポイント: {{ cat.point }}</li>
+                        <li>性別{{ cat.get_sex_display }}</li>
+                        
+                        <li>性格</li>
+                            <ul>
+                                {% for character in cat.character|split:'/' %}
+                                    <li>{{ character }}</li>
+                                {% endfor %}
+                            </ul>
+                     
+                        <li>推しポイント</li>
+                            <ul>
+                                {% for point in cat.point|split:'/' %}
+                                    <li>{{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                            
+                        
                     </ul>
     
                     <img src="{{ cat.image.url }}" alt="{{ cat.name }}" width="30%" height="30%">

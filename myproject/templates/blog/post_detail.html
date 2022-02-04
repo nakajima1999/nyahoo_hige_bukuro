@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load myfilters %}
 
 {% block title %}{{ object.title }} | {{ block.super }}{% endblock %}
 {% block description %}{{ object.description }}{% endblock %}
@@ -34,7 +35,11 @@
           {% for feature in object.features.all %}
             <li>{{ feature.name }}</li>
           {% endfor %}
-          <li>{{ object.feature_description }}</li>          
+        
+          {% for description in object.feature_description|split:'/' %}
+            <li>{{ description }}</li>
+          {% endfor %}
+
         </ul>
         
         <h4>場所</h4>
@@ -42,15 +47,19 @@
           {% for place in object.places.all %}
             <li>{{ place.name }}</li>
           {% endfor %}
-          <li>{{ object.place_description }}</li>
+   
+          {% for description in object.place_description|split:'/' %}
+            <li>{{ description }}</li>
+          {% endfor %}
+
         </ul>
 
         <hr>
 
         <p>
-          <small class="text-muted">作成日:{{ object.created_at }}</small><br>
-          <small class="text-muted">更新日:{{ object.updated_at }}</small><br>
-          <small class="text-muted">公開日:{{ object.published_at }}</small>
+          <small class="text-muted">作成日:{{ object.created_at|date:"Y-m-j H:i:s" }}</small><br>
+          <small class="text-muted">更新日:{{ object.updated_at|date:"Y-m-j H:i:s" }}</small><br>
+          <small class="text-muted">公開日:{{ object.published_at|date:"Y-m-j H:i:s" }}</small>
         </p>   
       </article>
     </main>
