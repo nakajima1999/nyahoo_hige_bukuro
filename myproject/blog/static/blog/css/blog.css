@@ -3,3 +3,12 @@ img {
   height: 50%;
   object-fit: cover;
 }
+
+.box {
+  display: block;
+  width: 20ch;
+  font-family: "Courier New", Consolas, monospace;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
