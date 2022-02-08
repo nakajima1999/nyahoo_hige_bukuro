@@ -1,21 +1,29 @@
 {% extends "base.html" %}
 {% load myfilters %}
 
-{% block title %}猫様の紹介 | {{ block.super }}{% endblock %}
+{% block title %}猫様について | {{ block.super }}{% endblock %}
 {% block description %}猫様の紹介ページです。{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <main class="col-9">
-        <h2>猫様の紹介</h2>
 
+    <main class="col-9">
+        <h2>猫様について</h2>
+        <p>
+            我が家の猫様は全員，<b>元野良猫</b>でした。<br>
+            縁あって，今は一緒に暮らしています。<br>
+            <br>
+            以下では，5匹それぞれについてご紹介します！
+        </p>
+
+      
         <ul>
             {% for cat in object_list %}
                 <li><h3>{{ cat }}</h3></li>
                     <ul>
                         <li>生まれ: {{ cat.born }}</li>
-                        <li>性別{{ cat.get_sex_display }}</li>
+                        <li>性別: {{ cat.get_sex_display }}</li>
                         
                         <li>性格</li>
                             <ul>
@@ -41,10 +49,12 @@
       {% include "blog/snippets/pagination.html" %}
     </main>
 
-
     <aside class="col-3">
-      {% include "blog/snippets/sidebar.html" %}
+        {% include "blog/snippets/sidebar.html" %}
     </aside>
+
+
+
 
   </div>
 </div>
