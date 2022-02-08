@@ -1,6 +1,6 @@
 from django.urls import path
 
-from blog.views import IndexView, PostDetailView, CatListView, FeatureListView,  PlaceListView, CatPostView, FeaturePostView, PlacePostView, SearchPostView
+from blog.views import IndexView, PostDetailView, CatListView, FeatureListView,  PlaceListView, CatPostView, FeaturePostView, PlacePostView, SearchPostView, PostYearList, PostMonthList, YearPostView
 
 app_name = 'blog'
 urlpatterns = [
@@ -13,5 +13,9 @@ urlpatterns = [
     path('feature/<str:feature_slug>/', FeaturePostView.as_view(), name='feature_post'),
     path('place/<str:place_slug>/', PlacePostView.as_view(), name='place_post'),
     path('search/', SearchPostView.as_view(), name='search_post'),
+    #path('post/<int:year>/', PostYearList.as_view(), name='year_post'),
+    path('post/<int:year>/<int:month>/', PostMonthList.as_view(), name='month_post'),
+
+    path('post/<int:year>/', YearPostView.as_view(), name='year_post'),
 ]
 

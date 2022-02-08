@@ -2,6 +2,7 @@ from django.db.models import Count, Q
 from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views import generic
 from django.shortcuts import get_object_or_404
 
 from blog.models import Post, Cat, Feature, Place
@@ -107,4 +108,53 @@ class SearchPostView(ListView):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get('q')
         context['query'] = query
+        return context
+
+
+class ArchiveListMixin:
+    model = Post
+    paginate_by = 12
+    date_field = 'created_at'
+    template_name = 'blog/post_list.html'
+    allow_empty = True
+    make_object_list = True
+
+
+
+class PostYearList(ArchiveListMixin, generic.YearArchiveView):
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('cat')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['heading'] = '{}年の日記'.format(self.kwargs['year'])
+        return context
+
+
+class YearPostView(ListView):
+    model = Post
+    template_name = 'blog/year_post.html'
+
+    def get_queryset(self):
+        year_slug = self.kwargs['place_slug']
+        self.place = get_object_or_404(Place, slug=year_slug)
+        qs = super().get_queryset().filter(years=self.place)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['year'] = self.place
+        return context
+
+
+class PostMonthList(ArchiveListMixin, generic.MonthArchiveView):
+    month_format = '%m'
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('category')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['heading'] = '{}年{}月の日記'.format(self.kwargs['year'], self.kwargs['month'])
         return context
