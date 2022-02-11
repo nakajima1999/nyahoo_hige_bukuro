@@ -17,7 +17,6 @@
             以下では，5匹それぞれについてご紹介します！
         </p>
 
-      
         <ul>
             {% for cat in object_list %}
                 <li><h3>{{ cat }}</h3></li>
@@ -27,16 +26,20 @@
                         
                         <li>性格</li>
                             <ul>
-                                {% for character in cat.character|split:'/' %}
-                                    <li>{{ character }}</li>
-                                {% endfor %}
+                                {% if cat.character %}
+                                    {% for character in cat.character|split:'/' %}
+                                        <li>{{ character }}</li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                      
                         <li>推しポイント</li>
                             <ul>
-                                {% for point in cat.point|split:'/' %}
-                                    <li>{{ point }}</li>
-                                {% endfor %}
+                                {% if cat.point %}
+                                    {% for point in cat.point|split:'/' %}
+                                        <li>{{ point }}</li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                             
                         
@@ -52,9 +55,6 @@
     <aside class="col-3">
         {% include "blog/snippets/sidebar.html" %}
     </aside>
-
-
-
 
   </div>
 </div>

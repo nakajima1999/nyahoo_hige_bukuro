@@ -36,9 +36,11 @@
             <li>{{ feature.name }}</li>
           {% endfor %}
         
-          {% for description in object.feature_description|split:'/' %}
-            <li>{{ description }}</li>
-          {% endfor %}
+          {% if object.feature_description %}
+            {% for description in object.feature_description|split:'/' %}
+              <li>{{ description }}</li>
+            {% endfor %}
+          {% endif %}
 
         </ul>
         
@@ -47,10 +49,12 @@
           {% for place in object.places.all %}
             <li>{{ place.name }}</li>
           {% endfor %}
-   
-          {% for description in object.place_description|split:'/' %}
-            <li>{{ description }}</li>
-          {% endfor %}
+          
+          {% if object.place_description %}
+            {% for description in object.place_description|split:'/' %}
+              <li>{{ description }}</li>
+            {% endfor %}
+          {% endif %}
 
         </ul>
 
