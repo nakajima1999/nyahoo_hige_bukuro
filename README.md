@@ -43,4 +43,4 @@
 
 
 ## 参照サイト
-- https://medium.com/@kjmczk/blogsite-django-747046b453f9(https://github.com/kjmczk/DjangoBlogSite)
+- https://medium.com/@kjmczk/blogsite-django-747046b453f9 (https://github.com/kjmczk/DjangoBlogSite)
