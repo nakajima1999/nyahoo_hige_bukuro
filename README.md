@@ -5,8 +5,8 @@
 投稿する**猫様のひげ専用ブログ**
 
 - 開発環境
-    - Python 3.8.8
-    - Django 4.0.1
+    - Python
+    - Django
     - Bootstrap
     
 - 作った目的
@@ -16,3 +16,21 @@
 
 
 
+## 詳細
+## 投稿一覧
+
+## 投稿の詳細
+
+## 猫様ごとの投稿一覧
+
+
+## ひげの特徴ごとの投稿一覧
+
+## 発見場所ごとの投稿一覧
+
+## 猫様について
+
+
+
+## 参照サイト
+- https://medium.com/@kjmczk/blogsite-django-747046b453f9(https://github.com/kjmczk/DjangoBlogSite)
