@@ -26,7 +26,7 @@
         
         <h4>基本情報</h4>
         <ul>
-          <li>発見日: {{ object.discovery_date }}</li>
+          <li>発見日: {{ object.discovery_date|date:"Y年n月j日"}}</li>
           <li>長さ: {{ object.length  }}cm</li>
         </ul>
    
