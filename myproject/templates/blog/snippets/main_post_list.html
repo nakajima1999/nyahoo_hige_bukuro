@@ -68,7 +68,7 @@
             </div>
 
               <p class="card-text">
-                {{ post.published_at|date:"Y-m-j"  }} / {{ post.length }}cm /
+                {{ post.published_at|date:"Y年n月j日"  }} / {{ post.length }}cm /
       
                 {% for cat in post.cats.all %}
                   {{ cat.name }}
