@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+# 猫様について
 class AboutCat(models.Model):
     class Meta:
         db_table = 'cat'
@@ -19,10 +20,10 @@ class AboutCat(models.Model):
     point = models.TextField(verbose_name='推しポイント', max_length=1000)  # 推しポイント（ココがかわいい）
     image = models.ImageField(upload_to='cat_images/', null=True, blank=True) # 画像
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    published_at = models.DateTimeField(blank=True, null=True)
-    is_public = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)  # 作成日
+    updated_at = models.DateTimeField(auto_now=True)  # 更新日
+    published_at = models.DateTimeField(blank=True, null=True)  # 公開日
+    is_public = models.BooleanField(default=False)  # 公開設定
 
     def save(self, *args, **kwargs):
         if self.is_public and not self.published_at:
