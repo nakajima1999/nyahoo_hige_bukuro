@@ -2,12 +2,14 @@ from django.db.models import Count, Q
 from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views.generic import CreateView
 from django.views import generic
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 
 from blog.models import Post, Cat, Feature, Place
 
-
+# 投稿詳細
 class PostDetailView(DetailView):
     model = Post
 
@@ -17,27 +19,28 @@ class PostDetailView(DetailView):
             raise Http404
         return obj
 
-
+# インデックス
 class IndexView(ListView):
     model = Post
     template_name = 'blog/index.html'
     paginate_by = 6
 
-
+# 猫様
 class CatListView(ListView):
     queryset = Cat.objects.annotate(
         num_posts=Count('post', filter=Q(post__is_public=True)))
 
-
+# 特徴
 class FeatureListView(ListView):
     queryset = Feature.objects.annotate(num_posts=Count(
         'post', filter=Q(post__is_public=True)))
 
+# 場所
 class PlaceListView(ListView):
     queryset = Place.objects.annotate(num_posts=Count(
         'post', filter=Q(post__is_public=True)))
 
-
+# 猫様一覧
 class CatPostView(ListView):
     model = Post
     template_name = 'blog/cat_post.html'
@@ -53,7 +56,7 @@ class CatPostView(ListView):
         context['cat'] = self.cat
         return context
 
-
+# 特徴一覧
 class FeaturePostView(ListView):
     model = Post
     template_name = 'blog/feature_post.html'
@@ -69,6 +72,7 @@ class FeaturePostView(ListView):
         context['feature'] = self.feature
         return context
 
+# 場所一覧
 class PlacePostView(ListView):
     model = Post
     template_name = 'blog/place_post.html'
@@ -84,6 +88,7 @@ class PlacePostView(ListView):
         context['place'] = self.place
         return context
 
+# 投稿検索
 class SearchPostView(ListView):
     model = Post
     template_name = 'blog/search_post.html'
@@ -158,3 +163,8 @@ class PostMonthList(ArchiveListMixin, generic.MonthArchiveView):
         context = super().get_context_data(**kwargs)
         context['heading'] = '{}年{}月の日記'.format(self.kwargs['year'], self.kwargs['month'])
         return context
+
+class PostCreate(CreateView):
+    model = Post
+    fields = "__all__"
+    success_url = reverse_lazy("list")
